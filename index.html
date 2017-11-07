@@ -12,17 +12,45 @@
 
 <h2> trying out D3 </h2>
 
+<div class = "container"
+	<div id = "barchart"></div>
+</div>
 
 <script>
   d3.json("wealth.json", function(error, data){
   	dataset= data;
 
+  	if (error) {
+  		console.log(error);
+  	}
+  	else {
   	makesomething();
-  	});
+  	};
 
   	function makesomething(){
   		console.log(dataset);
   	};
+
+  	
+  	var width = 600;
+  	var height = 50;
+  	var marginleft = 20;
+  	var marginright = 20;
+
+  	var xScale = d3.scaleLinear()
+  	.domain([0, d3.max(dataset, function(d) {return d."Race and Hispanic Origin of Householder"})]) //from 0 to highest amount in data
+  	.range([450,0])  //replace with values based on margins? 
+
+  	var yScale = d3.scaleLinear()
+  	.domain([0, d3.max(dataset, function(d) {return d.amount})])
+  	.range([0, 450]) //lower values will appear higher on the screen
+
+  // makeselection.sort(compare(a,b)){return d3.something})
+
+  // create the svg
+  svg = d3.select("#barchart") //select the class with id barchart
+    .append('svg')
+
 
 </script>
 
