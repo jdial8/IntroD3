@@ -41,7 +41,8 @@
 
 
   var xScale = d3.scaleOrdinal()
-     .domain([d3.extent(dataset, function(d) {return d.Race})]) //this doesn't make sense...
+     //.domain([d3.extent(dataset, function(d) {return d.Race})]) //this doesn't make sense...
+     .domain([dataset.map(function (d) {return d.Race})])
      .range([0, width]);  
 
   var yScale = d3.scaleLinear()
@@ -63,9 +64,9 @@
   	.append("rect")
   	.attr("class", "bar")
   	.attr("x", function(d) {return xScale(d.Race)})
-  	.attr("y", function(d) {return yScale(d.amount)})
+  	.attr("y", 0)
   	.attr("width", 20)
-  	.attr("height", 50)
+  	.attr("height", function(d) {return yScale(d.amount)})
   
 
   };
