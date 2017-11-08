@@ -16,6 +16,8 @@
 	<div id = "barchart"></div>
 </div>
 
+<
+
 <script>
   d3.json("wealth.json", function(error, data){
   	dataset= data;
@@ -38,8 +40,8 @@
   var height = 800 - margin.left - margin.right;
 
 
-  var xScale = d3.scaleLinear()
-     .domain([0, d3.max(dataset, function(d) {return d.Race})]) //this doesn't make sense...
+  var xScale = d3.scaleOrdinal()
+     .domain([d3.extent(dataset, function(d) {return d.Race})]) //this doesn't make sense...
      .range([0, width]);  
 
   var yScale = d3.scaleLinear()
@@ -60,8 +62,10 @@
   	.enter()
   	.append("rect")
   	.attr("class", "bar")
-  	.attr("x", function(d) {return d.Race})
-  	.attr("y", function(d) {return d.amount})
+  	.attr("x", function(d) {return xScale(d.Race)})
+  	.attr("y", function(d) {return yScale(d.amount)})
+  	.attr("width", 20)
+  	.attr("height", 50)
   
 
   };
