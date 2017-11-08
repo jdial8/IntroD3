@@ -32,15 +32,18 @@
   	
 
   	
-  var margin = {top: 200, right: 75, bottom: 75, left: 75};
+  var margin = {top: 200, right: 75, bottom: 200, left: 75};
   var width = 800 - margin.left - margin.right;
-  var height = 800 - margin.left - margin.right;
+  //var height = 800 - margin.left - margin.right;
+  var height = 1000 - margin.top - margin.bottom;
+
 
 
   var xScale = d3.scaleOrdinal()
      //.domain([d3.extent(dataset, function(d) {return d.Race})]) 
      .domain([dataset.map(function (d) {return d.Race})])
-     .range([0, width]);  
+     //.range([0, width]);  why doesn't this work?
+     .range([0,85,170,255,340,425,510])
 
   var yScale = d3.scaleLinear()
      .domain([0, d3.max(dataset, function(d) {return d.amount})]) //from 0 to highest amount in data
@@ -55,6 +58,8 @@
   var g = svg.append('g')
     .attr('transform', 'translate(' + margin.left + ',' + margin.right + ')');
 
+  
+  // create the chart
   g.selectAll(".bar")
   	.data(dataset)
   	.enter()
@@ -99,11 +104,12 @@
     .text("Graph Title");
 
   svg.append("text")
-    .attr("y", margin.top/6)
+    .attr("y", margin.top/5)
     .attr("x", width/2)
     .style("text-anchor", "middle")
     .style("font-size", "18px")
     .text("Graph Subtitle");
+
 
   };
 
