@@ -17,7 +17,14 @@
 
 <script>
   d3.json("wealth.json", function(error, data){
-  	dataset= data;
+  	dataset= data.sort(function(a,b) {return b.amount - a.amount});
+
+    dataset.forEach(function(d) {
+      d.Race = d.Race
+      d.wealth_cat = d.wealth_cat
+      d.amount = +d.amount
+      console.log(d)
+    });
 
   	if (error) {
   		console.log(error);
@@ -31,7 +38,7 @@
   		//console.log(dataset);
   	
 
-  var margin = {top: 200, right: 75, bottom: 200, left: 75};
+  var margin = {top: 200, right: 100, bottom: 200, left: 100};
   var width = 800 - margin.left - margin.right;
   //var height = 800 - margin.left - margin.right;
   var height = 1000 - margin.top - margin.bottom;
@@ -40,13 +47,13 @@
 
   var xScale = d3.scaleOrdinal()
      //.domain([d3.extent(dataset, function(d) {return d.Race})]) 
-     //.domain([dataset.map(function (d) {return d.Race})])
-     .domain(dataset.sort(function(a,b) {return d3.descending(a.amount, b.amount);}))
-     //.range([0, width]);  why doesn't this work?
-     .range([0,85,170,255,340,425,510])
+     .domain([dataset.map(function (d) {return d.Race;})])
+     //.domain(dataset.sort(function(a,b) {return d3.descending(a.amount, b.amount);}))
+     //.range([0, width]);  //why doesn't this work?
+     .range([0, 85,170,255,340,425, 510])
 
   var yScale = d3.scaleLinear()
-     .domain([0, d3.max(dataset, function(d) {return d.amount})]) //from 0 to highest amount in data
+     .domain([0, d3.max(dataset, function(d) {return d.amount;})]) //from 0 to highest amount in data
      .range([0, height]); //lower values will appear higher on the screen
 
   // create the svg
@@ -67,10 +74,10 @@
   	.enter()
   	.append("rect")
   	.attr("class", "bar")
-  	.attr("x", function(d) {return xScale(d.Race)})
+  	.attr("x", function(d) {return xScale(d.Race);})
   	.attr("y", 0)
-  	.attr("width", 20)
-  	.attr("height", function(d) {return yScale(d.amount)});
+  	.attr("width", 50)
+  	.attr("height", function(d) {return yScale(d.amount);});
   
 
   // y axis
@@ -79,11 +86,11 @@
     .attr('transform', 'translate(' + margin.left + ',' + margin.right + ')')
     .call(d3.axisLeft(yScale));
 
+  // y axis text 
   svg.append("text")
-    .attr("y", height/2)
-    .attr("x", margin.left/2)
+    .attr('transform', 'translate('+ margin.left/2 + ',' + height/2 + ')rotate(-90)')
     .style("text-anchor", "middle")
-    .text("y-axis label");
+    .text("Net Worth");
   
   // x axis
   svg.append('g')
@@ -91,10 +98,11 @@
     .call(d3.axisTop(xScale));
 
   svg.append("text")
-    .attr("y", margin.left)
-    .attr("x", width - 5)
+    .attr('transform', 'translate(' + width/2  + ',' + (margin.left - 15) + ')')
+    //.attr("y", margin.top/2.5)
+    //.attr("x", width/2)
     .style("text-anchor", "middle")
-    .text("x-axis label");
+    .text("Race/Ethnicity");
 
 
   // title & subtitle
