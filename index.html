@@ -28,9 +28,9 @@
     }
   	});
 
-  	function makesomething(){
-  		console.log(dataset);
-  	};
+  function makesomething(){
+  		//console.log(dataset);
+  	
 
   	
   var margin = {top: 100, right: 75, bottom: 175, left: 75};
@@ -38,6 +38,33 @@
   var height = 800 - margin.left - margin.right;
 
 
+  var xScale = d3.scaleLinear()
+     .domain([0, d3.max(dataset, function(d) {return d.Race})]) //this doesn't make sense...
+     .range([0, width]);  
+
+  var yScale = d3.scaleLinear()
+     .domain([0, d3.max(dataset, function(d) {return d.amount})]) //from 0 to highest amount in data
+     .range([0, height]); //lower values will appear higher on the screen
+
+  // create the svg
+  var svg = d3.select("#barchart") //select the class with id barchart
+    .append('svg')
+    .attr("width", width)
+    .attr("height", height);
+
+  var g = svg.append('g')
+    .attr('transform', 'translate(' + margin.left + ',' + margin.right + ')');
+
+  g.selectAll(".bar")
+  	.data(dataset)
+  	.enter()
+  	.append("rect")
+  	.attr("class", "bar")
+  	.attr("x", function(d) {return d.Race})
+  	.attr("y", function(d) {return d.amount})
+  
+
+  };
 
 </script>
 
