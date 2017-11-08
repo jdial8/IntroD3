@@ -31,7 +31,6 @@
   		//console.log(dataset);
   	
 
-  	
   var margin = {top: 200, right: 75, bottom: 200, left: 75};
   var width = 800 - margin.left - margin.right;
   //var height = 800 - margin.left - margin.right;
@@ -41,7 +40,8 @@
 
   var xScale = d3.scaleOrdinal()
      //.domain([d3.extent(dataset, function(d) {return d.Race})]) 
-     .domain([dataset.map(function (d) {return d.Race})])
+     //.domain([dataset.map(function (d) {return d.Race})])
+     .domain(dataset.sort(function(a,b) {return d3.descending(a.amount, b.amount);}))
      //.range([0, width]);  why doesn't this work?
      .range([0,85,170,255,340,425,510])
 
@@ -59,9 +59,11 @@
     .attr('transform', 'translate(' + margin.left + ',' + margin.right + ')');
 
   
+
   // create the chart
   g.selectAll(".bar")
   	.data(dataset)
+    //.sort(function(a,b){return d3.ascending(a,b)})
   	.enter()
   	.append("rect")
   	.attr("class", "bar")
