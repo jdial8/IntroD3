@@ -32,7 +32,7 @@
   	
 
   	
-  var margin = {top: 100, right: 75, bottom: 175, left: 75};
+  var margin = {top: 200, right: 75, bottom: 75, left: 75};
   var width = 800 - margin.left - margin.right;
   var height = 800 - margin.left - margin.right;
 
@@ -63,7 +63,7 @@
   	.attr("x", function(d) {return xScale(d.Race)})
   	.attr("y", 0)
   	.attr("width", 20)
-  	.attr("height", function(d) {return yScale(d.amount)})
+  	.attr("height", function(d) {return yScale(d.amount)});
   
 
   // y axis
@@ -77,8 +77,33 @@
     .attr("x", margin.left/2)
     .style("text-anchor", "middle")
     .text("y-axis label");
+  
+  // x axis
+  svg.append('g')
+    .attr('transform', 'translate(' + margin.left + ',' + margin.right + ')')
+    .call(d3.axisTop(xScale));
+
+  svg.append("text")
+    .attr("y", margin.left)
+    .attr("x", width - 5)
+    .style("text-anchor", "middle")
+    .text("x-axis label");
 
 
+  // title & subtitle
+  svg.append("text")
+    .attr("y", margin.top/10)
+    .attr("x", width/2)
+    .style("text-anchor", "middle")
+    .style("font-size", "22px")
+    .text("Graph Title");
+
+  svg.append("text")
+    .attr("y", margin.top/6)
+    .attr("x", width/2)
+    .style("text-anchor", "middle")
+    .style("font-size", "18px")
+    .text("Graph Subtitle");
 
   };
 
