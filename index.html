@@ -5,8 +5,6 @@
   <script type="text/javascript" src="./d3/d3.min.js"></script>
 
 
-
-
 </head>
 <body>
 
@@ -16,7 +14,6 @@
 	<div id = "barchart"></div>
 </div>
 
-<
 
 <script>
   d3.json("wealth.json", function(error, data){
@@ -41,7 +38,7 @@
 
 
   var xScale = d3.scaleOrdinal()
-     //.domain([d3.extent(dataset, function(d) {return d.Race})]) //this doesn't make sense...
+     //.domain([d3.extent(dataset, function(d) {return d.Race})]) 
      .domain([dataset.map(function (d) {return d.Race})])
      .range([0, width]);  
 
@@ -68,6 +65,20 @@
   	.attr("width", 20)
   	.attr("height", function(d) {return yScale(d.amount)})
   
+
+  // y axis
+
+  svg.append('g')
+    .attr('transform', 'translate(' + margin.left + ',' + margin.right + ')')
+    .call(d3.axisLeft(yScale));
+
+  svg.append("text")
+    .attr("y", height/2)
+    .attr("x", margin.left/2)
+    .style("text-anchor", "middle")
+    .text("y-axis label");
+
+
 
   };
 
