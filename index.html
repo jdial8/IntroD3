@@ -6,7 +6,6 @@
 
   <style>
 
-
     svg {
           background-color: #C8C8CC;
         }
@@ -25,9 +24,6 @@
         opacity: .8;
       }
 
-
-
-
   </style>
 
 </head>
@@ -43,7 +39,6 @@
 
 <script>
   d3.json("wealth.json", function(error, data){
-  	//dataset= data.sort(function(a,b) {return b.amount - a.amount});
     dataset= data;
 
     dataset.forEach(function(d) {
@@ -67,7 +62,6 @@
 
   var margin = {top: 200, right: 100, bottom: 100, left: 100};
   var width = 900 - margin.left - margin.right;
-  //var height = 800 - margin.left - margin.right;
   var height = 1000 - margin.top - margin.bottom;
 
 
@@ -92,7 +86,6 @@
   var g = svg.append('g')
     .attr('transform', 'translate(' + margin.left + ',' + margin.right + ')');
 
-  
 
   // create the chart
   g.selectAll(".bar")
@@ -105,7 +98,7 @@
       else {return "bar"};})
   	.attr("x", function(d) {return xScale(d.Race);})
   	.attr("y", 0)
-  	.attr("width", 30)
+  	.attr("width", 80)
   	.attr("height", function(d) {return yScale(d.amount);});
   
 
@@ -124,14 +117,20 @@
   // x axis
   svg.append('g')
     .attr('transform', 'translate(' + margin.left + ',' + margin.right + ')')
-    .call(d3.axisTop(xScale));
+    .call(d3.axisTop(xScale))
+    .selectAll("text")
+    .attr("transform", "rotate(-30)")
+    .attr("x", +10)
+    .attr("y", -15);
 
+  // x axis text
   svg.append("text")
-    .attr('transform', 'translate(' + width/2  + ',' + (margin.left - 15) + ')')
+    //.attr('transform', 'translate(' + width/2  + ',' + (margin.left - 15) + ')')
+    .attr('transform', 'translate(' + (width - 25)  + ',' + (margin.left) + ')')
     //.attr("y", margin.top/2.5)
     //.attr("x", width/2)
     .style("text-anchor", "middle")
-    .text("Race/Ethnicity");
+    .text("Race");
 
 
 
@@ -140,17 +139,32 @@
     .attr("y", margin.top/10)
     .attr("x", width/2)
     .style("text-anchor", "middle")
-    .style("font-size", "22px")
-    .text("Graph Title");
+    .style("font-size", "23px")
+    .text("Blacks Only Group to Hold Less Than $10,000 in Net Worth");
 
   svg.append("text")
     .attr("y", margin.top/5)
     .attr("x", width/2)
     .style("text-anchor", "middle")
     .style("font-size", "18px")
-    .text("Graph Subtitle");
+    .text("According to 2016 CPS Annual Earnings File");
 
+  var legend = svg.selectAll('.legend')
+  .data(dataset)
+  .enter()
+  .append('g')
+  .attr('class', 'legend')
+  .attr('transform', function(d, i) {
+    var height = 15 + 4;
+    var offset =  height * dataset.length / 2;
+    var horz = 2 * 15;
+    var vert = i * height - 10;
+    return 'translate(' + horz + ',' + vert + ')';
+  });
 
+  legend.append('rect')
+    .attr('width', 15)
+    .attr('height', 15);
 
 
   };
