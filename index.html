@@ -4,11 +4,37 @@
   <meta charset="UTF-8">
   <script type="text/javascript" src="./d3/d3.min.js"></script>
 
+  <style>
+
+
+    svg {
+          background-color: #C8C8CC;
+        }
+
+    .bar {
+        stroke: #000000;
+        stroke-width: 1;
+        fill: #FF9638;
+        opacity: .8;
+      }
+
+    .bbar {
+        stroke: #000000;
+        stroke-width: 1;
+        fill: #0391B2;
+        opacity: .8;
+      }
+
+
+
+
+  </style>
 
 </head>
 <body>
 
-<h2> trying out D3 </h2>
+    <h2> trying out D3 </h2>
+
 
 <div class = "container"
 	<div id = "barchart"></div>
@@ -17,13 +43,14 @@
 
 <script>
   d3.json("wealth.json", function(error, data){
-  	dataset= data.sort(function(a,b) {return b.amount - a.amount});
+  	//dataset= data.sort(function(a,b) {return b.amount - a.amount});
+    dataset= data;
 
     dataset.forEach(function(d) {
       d.Race = d.Race
       d.wealth_cat = d.wealth_cat
-      d.amount = +d.amount
-      console.log(d)
+      d.amount = +d.amount;
+      //console.log(d)
     });
 
   	if (error) {
@@ -38,8 +65,8 @@
   		//console.log(dataset);
   	
 
-  var margin = {top: 200, right: 100, bottom: 200, left: 100};
-  var width = 800 - margin.left - margin.right;
+  var margin = {top: 200, right: 100, bottom: 100, left: 100};
+  var width = 900 - margin.left - margin.right;
   //var height = 800 - margin.left - margin.right;
   var height = 1000 - margin.top - margin.bottom;
 
@@ -47,8 +74,8 @@
 
   var xScale = d3.scaleOrdinal()
      //.domain([d3.extent(dataset, function(d) {return d.Race})]) 
-     .domain([dataset.map(function (d) {return d.Race;})])
-     //.domain(dataset.sort(function(a,b) {return d3.descending(a.amount, b.amount);}))
+     //.domain([dataset.map(function (d) {return d.Race;})])
+     .domain(dataset.sort(function(a,b) {return d3.descending(a.amount, b.amount);}))
      //.range([0, width]);  //why doesn't this work?
      .range([0, 85,170,255,340,425, 510])
 
@@ -70,13 +97,15 @@
   // create the chart
   g.selectAll(".bar")
   	.data(dataset)
-    //.sort(function(a,b){return d3.ascending(a,b)})
   	.enter()
   	.append("rect")
-  	.attr("class", "bar")
+  	//.attr("class", "bar")
+    .attr("class", function(d) {
+      if (d.amount < 10000) {return "bbar";}
+      else {return "bar"};})
   	.attr("x", function(d) {return xScale(d.Race);})
   	.attr("y", 0)
-  	.attr("width", 50)
+  	.attr("width", 30)
   	.attr("height", function(d) {return yScale(d.amount);});
   
 
@@ -105,6 +134,7 @@
     .text("Race/Ethnicity");
 
 
+
   // title & subtitle
   svg.append("text")
     .attr("y", margin.top/10)
@@ -119,6 +149,8 @@
     .style("text-anchor", "middle")
     .style("font-size", "18px")
     .text("Graph Subtitle");
+
+
 
 
   };
