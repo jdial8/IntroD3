@@ -4,6 +4,8 @@
   <meta charset="UTF-8">
   <script type="text/javascript" src="./d3/d3.min.js"></script>
 
+  
+  <title>Intro to D3 Assignment</title>
   <style>
 
     svg {
@@ -29,7 +31,7 @@
 </head>
 <body>
 
-    <h2> trying out D3 </h2>
+    <h4> Jasmin Dial </h4>
 
 
 <div class = "container"
@@ -149,22 +151,34 @@
     .style("font-size", "18px")
     .text("According to 2016 CPS Annual Earnings File");
 
-  var legend = svg.selectAll('.legend')
-  .data(dataset)
-  .enter()
-  .append('g')
-  .attr('class', 'legend')
-  .attr('transform', function(d, i) {
-    var height = 15 + 4;
-    var offset =  height * dataset.length / 2;
-    var horz = 2 * 15;
-    var vert = i * height - 10;
-    return 'translate(' + horz + ',' + vert + ')';
-  });
 
-  legend.append('rect')
+  // legend
+  svg.append("rect")
     .attr('width', 15)
-    .attr('height', 15);
+    .attr('height', 15) 
+    .attr('transform', 'translate(' + 550 + ',' + 550 + ')')
+    .classed("bbar", "true");
+
+  svg.append("rect")
+    .attr('width', 15)
+    .attr('height', 15) 
+    .attr('transform', 'translate(' + 550 + ',' + 570 + ')')
+    .classed("bar", "true");
+
+  svg.append("text")
+    .attr("y", 560)
+    .attr("x", 600)
+    .style("text-anchor", "middle")
+    .style("font-size", "10px")
+    .text("Black Workers");
+
+  svg.append("text")
+    .attr("y", 580)
+    .attr("x", 610)
+    .style("text-anchor", "middle")
+    .style("font-size", "10px")
+    .text("Non-Black Workers");
+
 
 
   };
