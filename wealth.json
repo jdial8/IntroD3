@@ -1,0 +1,37 @@
+[
+  {
+    "Race": "White alone",
+    "wealth_cat": "net_worth",
+    "amount": 103963
+  },
+  {
+    "Race": ".White alone, not Hispanic",
+    "wealth_cat": "net_worth",
+    "amount": 132483
+  },
+  {
+    "Race": "Black alone",
+    "wealth_cat": "net_worth",
+    "amount": 9211
+  },
+  {
+    "Race": "Asian alone",
+    "wealth_cat": "net_worth",
+    "amount": 112250
+  },
+  {
+    "Race": "Other (residual)",
+    "wealth_cat": "net_worth",
+    "amount": 13703
+  },
+  {
+    "Race": "Hispanic origin (any race)",
+    "wealth_cat": "net_worth",
+    "amount": 12460
+  },
+  {
+    "Race": "Not of Hispanic origin",
+    "wealth_cat": "net_worth",
+    "amount": 99394
+  }
+]
